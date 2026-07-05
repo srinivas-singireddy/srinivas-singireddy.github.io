@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Srinivas Reddy Singireddy — Cloud &amp; DevOps Solutions Architect · Munich</title>
+  <meta name="description" content="Cloud &amp; DevOps Solutions Architect in Munich. Production-grade MLOps platform on AWS EKS: Terraform, GitOps with ArgoCD, observability, cost-aware operations." />
+
+  <!-- Fonts: Inter (body/headings) + JetBrains Mono (technical labels) with system fallbacks -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+          },
+          colors: {
+            surface: {
+              950: '#0b0f14',
+              900: '#101620',
+              850: '#141b27',
+              800: '#1a2231',
+            },
+          },
+          maxWidth: {
+            'content': '1140px',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html { background-color: #0b0f14; }
+    ::selection { background: rgba(16, 185, 129, 0.28); }
+
+    /* Focus visibility on the dark theme */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #34d399;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Diagram node hover lift (subtle, CSS only) */
+    .diag-node { transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
+    .diag-node:hover {
+      transform: translateY(-2px);
+      border-color: rgba(52, 211, 153, 0.55);
+      box-shadow: 0 6px 20px -8px rgba(16, 185, 129, 0.25);
+    }
+
+    /* Scroll reveal (disabled if user prefers reduced motion) */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 500ms ease, transform 500ms ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .diag-node { transition: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* Flow arrows: horizontal on desktop, rotate to vertical when stacked */
+    .flow-arrow svg { display: block; }
+    @media (max-width: 767px) {
+      .flow-arrow svg { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+
+<body class="bg-surface-950 text-slate-300 font-sans antialiased">
+
+  <!-- ============================================================ -->
+  <!-- HERO -->
+  <!-- ============================================================ -->
+  <header class="border-b border-slate-800/70">
+    <div class="max-w-content mx-auto px-5 sm:px-8 pt-16 pb-14 sm:pt-24 sm:pb-20">
+      <p class="font-mono text-[13px] tracking-widest uppercase text-emerald-400/90 mb-5">
+        Munich, Germany · eu-central-1
+      </p>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-100 leading-tight">
+        Srinivas Reddy Singireddy
+      </h1>
+
+      <p class="mt-3 text-lg sm:text-xl font-medium text-slate-400">
+        Cloud &amp; DevOps Solutions Architect · AWS · Kubernetes (CKA) · GitOps
+      </p>
+
+      <p class="mt-7 max-w-2xl text-base sm:text-lg leading-relaxed text-slate-300">
+        I build and operate production cloud platforms end-to-end —
+        <span class="text-slate-100 font-medium">infrastructure as code, GitOps delivery, observability, and cost-aware operations</span>.
+        Below: one flagship platform, documented decision by decision, and the
+        compliance-aware AI workload it is designed to host.
+      </p>
+
+      <div class="mt-9 flex flex-wrap items-center gap-3">
+        <a href="https://www.linkedin.com/in/srinivas-singireddy/" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-surface-950 hover:bg-emerald-400 transition-colors">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/srinivas-singireddy" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-surface-850 px-5 py-2.5 text-sm font-semibold text-slate-200 hover:border-slate-500 hover:text-white transition-colors">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.54-3.87-1.54-.53-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.16 1.18a11 11 0 0 1 5.76 0c2.2-1.49 3.16-1.18 3.16-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 1 · MLOPS PLATFORM SHOWCASE -->
+    <!-- ============================================================ -->
+    <section aria-labelledby="platform-heading" class="border-b border-slate-800/70">
+      <div class="max-w-content mx-auto px-5 sm:px-8 py-16 sm:py-24">
+
+        <div class="reveal">
+          <p class="font-mono text-[13px] tracking-widest uppercase text-emerald-400/90 mb-3">Flagship project · Built &amp; operating</p>
+          <h2 id="platform-heading" class="text-2xl sm:text-4xl font-bold tracking-tight text-slate-100">
+            MLOps Platform on AWS EKS
+          </h2>
+          <p class="mt-5 max-w-3xl text-base sm:text-lg leading-relaxed">
+            A production-grade Kubernetes platform, built from an empty AWS account to a fully
+            reconciled GitOps estate. Two repositories, one contract:
+            <span class="text-slate-100 font-medium">Terraform owns infrastructure, ArgoCD owns applications</span> —
+            and they meet at exactly one boundary, the ArgoCD root Application.
+          </p>
+        </div>
+
+        <!-- Repo cards -->
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 reveal">
+          <a href="https://github.com/srinivas-singireddy/mlops-platform-aws-eks" target="_blank" rel="noopener noreferrer"
+             class="diag-node block rounded-xl border border-slate-800 bg-surface-900 p-5 hover:no-underline">
+            <p class="font-mono text-sm text-emerald-300">mlops-platform-aws-eks</p>
+            <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+              Infrastructure. Every AWS resource in Terraform, modularized by lifecycle:
+              bootstrap → network → cluster → platform.
+            </p>
+          </a>
+          <a href="https://github.com/srinivas-singireddy/mlops-platform-deploy" target="_blank" rel="noopener noreferrer"
+             class="diag-node block rounded-xl border border-slate-800 bg-surface-900 p-5 hover:no-underline">
+            <p class="font-mono text-sm text-emerald-300">mlops-platform-deploy</p>
+            <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+              Applications. ArgoCD app-of-apps manifests, continuously reconciled (~3-minute loop,
+              selfHeal enabled). Git is the only source of truth.
+            </p>
+          </a>
+        </div>
+
+        <!-- =============== DIAGRAM 1: High-level system view =============== -->
+        <figure class="mt-14 reveal" role="img"
+                aria-label="High-level system diagram: Git repositories feed two ownership domains. Terraform provisions the AWS foundation — bootstrap state backend, VPC network, the EKS cluster, and the platform layer (cert-manager, ArgoCD, ALB Controller, ESO). ArgoCD, once installed, reconciles the application layer from Git. The two domains meet at one boundary: the ArgoCD root Application.">
+          <figcaption class="font-mono text-[13px] tracking-widest uppercase text-slate-500 mb-5">
+            System view · one boundary between two owners
+          </figcaption>
+
+          <div class="rounded-2xl border border-slate-800 bg-surface-900 p-5 sm:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+
+              <!-- Terraform domain -->
+              <div class="rounded-xl border border-slate-700/60 bg-surface-850 p-4 sm:p-5">
+                <p class="font-mono text-xs uppercase tracking-widest text-slate-400 mb-4">
+                  Terraform owns · infrastructure
+                </p>
+                <div class="space-y-3">
+                  <div class="diag-node rounded-lg border border-slate-700 bg-surface-800 px-4 py-3">
+                    <p class="font-mono text-sm text-slate-200">bootstrap</p>
+                    <p class="text-xs text-slate-500 mt-0.5">S3 state backend · DynamoDB lock</p>
+                  </div>
+                  <div class="flex justify-center" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v10M3 8l4 4 4-4" stroke="#475569" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  <div class="diag-node rounded-lg border border-slate-700 bg-surface-800 px-4 py-3">
+                    <p class="font-mono text-sm text-slate-200">network</p>
+                    <p class="text-xs text-slate-500 mt-0.5">VPC 10.0.0.0/16 · 2 AZs · public/private subnets · single NAT</p>
+                  </div>
+                  <div class="flex justify-center" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v10M3 8l4 4 4-4" stroke="#475569" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  <div class="diag-node rounded-lg border border-slate-700 bg-surface-800 px-4 py-3">
+                    <p class="font-mono text-sm text-slate-200">cluster</p>
+                    <p class="text-xs text-slate-500 mt-0.5">EKS · managed node group · IRSA · addons</p>
+                  </div>
+                  <div class="flex justify-center" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v10M3 8l4 4 4-4" stroke="#475569" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  <div class="diag-node rounded-lg border border-slate-700 bg-surface-800 px-4 py-3">
+                    <p class="font-mono text-sm text-slate-200">platform</p>
+                    <p class="text-xs text-slate-500 mt-0.5">cert-manager · ArgoCD · ALB Controller · ESO</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ArgoCD domain -->
+              <div class="rounded-xl border border-slate-700/60 bg-surface-850 p-4 sm:p-5 flex flex-col">
+                <p class="font-mono text-xs uppercase tracking-widest text-slate-400 mb-4">
+                  ArgoCD owns · applications
+                </p>
+
+                <!-- The boundary: emerald-highlighted single meeting point -->
+                <div class="diag-node rounded-lg border border-emerald-500/60 bg-emerald-500/10 px-4 py-3">
+                  <p class="font-mono text-sm text-emerald-300">root Application</p>
+                  <p class="text-xs text-emerald-200/70 mt-0.5">the single Terraform ↔ ArgoCD boundary</p>
+                </div>
+                <div class="flex justify-center my-3" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v10M3 8l4 4 4-4" stroke="#475569" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+                <div class="diag-node rounded-lg border border-slate-700 bg-surface-800 px-4 py-3">
+                  <p class="font-mono text-sm text-slate-200">app-of-apps</p>
+                  <p class="text-xs text-slate-500 mt-0.5">reconciled from <span class="font-mono">mlops-platform-deploy</span> · ~3&nbsp;min loop · selfHeal</p>
+                </div>
+                <div class="flex justify-center my-3" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v10M3 8l4 4 4-4" stroke="#475569" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="diag-node rounded-lg border border-slate-700 bg-surface-800 px-3 py-2.5">
+                    <p class="font-mono text-xs text-slate-200">Prometheus</p>
+                  </div>
+                  <div class="diag-node rounded-lg border border-slate-700 bg-surface-800 px-3 py-2.5">
+                    <p class="font-mono text-xs text-slate-200">Grafana</p>
+                  </div>
+                  <div class="diag-node rounded-lg border border-slate-700 bg-surface-800 px-3 py-2.5">
+                    <p class="font-mono text-xs text-slate-200">Loki + Alloy</p>
+                  </div>
+                  <div class="diag-node rounded-lg border border-slate-700 bg-surface-800 px-3 py-2.5">
+                    <p class="font-mono text-xs text-slate-200">Alertmanager</p>
+                  </div>
+                </div>
+
+                <p class="mt-auto pt-5 text-xs text-slate-500 leading-relaxed">
+                  Nothing is applied to the cluster out-of-band. If it isn't in Git, it doesn't exist.
+                </p>
+              </div>
+            </div>
+          </div>
+        </figure>
+
+        <!-- Technical highlights -->
+        <div class="mt-14 reveal">
+          <h3 class="font-mono text-[13px] tracking-widest uppercase text-slate-500 mb-6">Technical highlights · built</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+            <div class="diag-node rounded-xl border border-slate-800 bg-surface-900 p-5">
+              <p class="text-sm font-semibold text-slate-100">Infrastructure as code, by lifecycle</p>
+              <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+                Four Terraform roots split by blast radius and change cadence — the state backend never
+                shares a lifecycle with the cluster it protects.
+              </p>
+            </div>
+
+            <div class="diag-node rounded-xl border border-slate-800 bg-surface-900 p-5">
+              <p class="text-sm font-semibold text-slate-100">Deliberate network trade-offs</p>
+              <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+                Two-AZ public/private split with a single NAT Gateway — a documented lab cost decision,
+                with the one-NAT-per-AZ production alternative recorded alongside it.
+              </p>
+            </div>
+
+            <div class="diag-node rounded-xl border border-slate-800 bg-surface-900 p-5">
+              <p class="text-sm font-semibold text-slate-100">VPC CNI prefix delegation</p>
+              <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+                Raised pod density from <span class="font-mono text-slate-200">~17</span> to
+                <span class="font-mono text-slate-200">~110</span> pods per t3.medium — at zero additional cost.
+              </p>
+            </div>
+
+            <div class="diag-node rounded-xl border border-slate-800 bg-surface-900 p-5">
+              <p class="text-sm font-semibold text-slate-100">Observability, current-generation</p>
+              <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+                Prometheus, Grafana, Loki, and Alertmanager — with Grafana Alloy adopted as the
+                collector after Promtail reached end of life.
+              </p>
+            </div>
+
+            <div class="diag-node rounded-xl border border-slate-800 bg-surface-900 p-5">
+              <p class="text-sm font-semibold text-slate-100">Cost-aware operations</p>
+              <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+                Ephemeral cluster pattern: full destroy/apply daily discipline keeps the lab at
+                <span class="font-mono text-slate-200">~€20–30/month</span> instead of
+                <span class="font-mono text-slate-200">~€100/month</span> running 24/7. gp3 as the default StorageClass.
+              </p>
+            </div>
+
+            <div class="diag-node rounded-xl border border-slate-800 bg-surface-900 p-5">
+              <p class="text-sm font-semibold text-slate-100">Decisions on the record</p>
+              <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+                <span class="font-mono text-slate-200">7</span> architecture decision records and
+                <span class="font-mono text-slate-200">30+</span> documented lessons learned — every
+                non-obvious choice has a written why.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- screenshot slot: Grafana dashboard -->
+        <!-- screenshot slot: ArgoCD application tree -->
+
+        <!-- Roadmap: honestly labeled -->
+        <div class="mt-14 reveal">
+          <h3 class="font-mono text-[13px] tracking-widest uppercase text-slate-500 mb-6">Roadmap · designed, not yet live</h3>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <li class="flex items-start gap-3 rounded-lg border border-dashed border-slate-700/80 bg-surface-900/50 px-4 py-3">
+              <span class="mt-0.5 shrink-0 rounded bg-amber-400/10 border border-amber-400/30 px-1.5 py-0.5 font-mono text-[11px] uppercase tracking-wide text-amber-300">In&nbsp;progress</span>
+              <span class="text-sm text-slate-400">Karpenter node autoscaling</span>
+            </li>
+            <li class="flex items-start gap-3 rounded-lg border border-dashed border-slate-700/80 bg-surface-900/50 px-4 py-3">
+              <span class="mt-0.5 shrink-0 rounded bg-slate-400/10 border border-slate-500/30 px-1.5 py-0.5 font-mono text-[11px] uppercase tracking-wide text-slate-400">Planned</span>
+              <span class="text-sm text-slate-400">GitHub Actions CI/CD with OIDC (keyless AWS auth)</span>
+            </li>
+            <li class="flex items-start gap-3 rounded-lg border border-dashed border-slate-700/80 bg-surface-900/50 px-4 py-3">
+              <span class="mt-0.5 shrink-0 rounded bg-slate-400/10 border border-slate-500/30 px-1.5 py-0.5 font-mono text-[11px] uppercase tracking-wide text-slate-400">Planned</span>
+              <span class="text-sm text-slate-400">KServe + vLLM model serving on GPU node pools</span>
+            </li>
+            <li class="flex items-start gap-3 rounded-lg border border-dashed border-slate-700/80 bg-surface-900/50 px-4 py-3">
+              <span class="mt-0.5 shrink-0 rounded bg-slate-400/10 border border-slate-500/30 px-1.5 py-0.5 font-mono text-[11px] uppercase tracking-wide text-slate-400">Planned</span>
+              <span class="text-sm text-slate-400">munich-rag-compliance running as a tenant workload on this platform</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 2 · SECRETS PIPELINE SPOTLIGHT -->
+    <!-- ============================================================ -->
+    <section aria-labelledby="secrets-heading" class="border-b border-slate-800/70 bg-surface-900/40">
+      <div class="max-w-content mx-auto px-5 sm:px-8 py-16 sm:py-24">
+
+        <div class="reveal">
+          <p class="font-mono text-[13px] tracking-widest uppercase text-emerald-400/90 mb-3">Architecture spotlight · built</p>
+          <h2 id="secrets-heading" class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-100">
+            Secrets without secrets in Git
+          </h2>
+          <p class="mt-4 max-w-3xl text-base leading-relaxed">
+            GitOps has an inherent tension: everything must live in Git, but credentials must not.
+            The platform resolves it with a fully declarative pull path — secrets are authored once in
+            AWS Secrets Manager and materialize inside pods with
+            <span class="text-slate-100 font-medium">no plaintext credential ever committed</span>.
+          </p>
+        </div>
+
+        <!-- =============== DIAGRAM 2: Secrets pipeline flow =============== -->
+        <figure class="mt-10 reveal" role="img"
+                aria-label="Secrets pipeline diagram: AWS Secrets Manager holds the credential. The External Secrets Operator, authenticated via IRSA, pulls it and writes a native Kubernetes Secret, which is mounted into the pod as environment variables. Git only ever contains the ExternalSecret reference, never the value.">
+          <figcaption class="sr-only">Secrets pipeline flow</figcaption>
+
+          <div class="rounded-2xl border border-slate-800 bg-surface-900 p-5 sm:p-8">
+            <div class="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-0">
+
+              <div class="diag-node flex-1 rounded-xl border border-slate-700 bg-surface-800 p-4 text-center">
+                <p class="font-mono text-sm text-slate-100">AWS Secrets Manager</p>
+                <p class="mt-1 text-xs text-slate-500">credential source of truth</p>
+              </div>
+
+              <div class="flow-arrow flex items-center justify-center px-1 md:px-2 py-1 md:py-0" aria-hidden="true">
+                <svg width="34" height="16" viewBox="0 0 34 16"><path d="M1 8h28M24 3l6 5-6 5" stroke="#34d399" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+
+              <div class="diag-node flex-1 rounded-xl border border-emerald-500/50 bg-emerald-500/5 p-4 text-center">
+                <p class="font-mono text-sm text-emerald-300">External Secrets Operator</p>
+                <p class="mt-1 text-xs text-emerald-200/60">pulls via IRSA — no static AWS keys</p>
+              </div>
+
+              <div class="flow-arrow flex items-center justify-center px-1 md:px-2 py-1 md:py-0" aria-hidden="true">
+                <svg width="34" height="16" viewBox="0 0 34 16"><path d="M1 8h28M24 3l6 5-6 5" stroke="#34d399" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+
+              <div class="diag-node flex-1 rounded-xl border border-slate-700 bg-surface-800 p-4 text-center">
+                <p class="font-mono text-sm text-slate-100">Kubernetes Secret</p>
+                <p class="mt-1 text-xs text-slate-500">materialized in-cluster only</p>
+              </div>
+
+              <div class="flow-arrow flex items-center justify-center px-1 md:px-2 py-1 md:py-0" aria-hidden="true">
+                <svg width="34" height="16" viewBox="0 0 34 16"><path d="M1 8h28M24 3l6 5-6 5" stroke="#34d399" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+
+              <div class="diag-node flex-1 rounded-xl border border-slate-700 bg-surface-800 p-4 text-center">
+                <p class="font-mono text-sm text-slate-100">Pod env</p>
+                <p class="mt-1 text-xs text-slate-500">consumed at runtime</p>
+              </div>
+            </div>
+
+            <p class="mt-6 pt-5 border-t border-slate-800 text-center font-mono text-xs text-slate-500">
+              Git contains the <span class="text-slate-300">ExternalSecret reference</span> — never the value.
+              Zero plaintext credentials in the repository.
+            </p>
+          </div>
+        </figure>
+
+        <!-- =============== DIAGRAM 3: Observability data flow =============== -->
+        <figure class="mt-12 reveal" role="img"
+                aria-label="Observability data flow diagram: workloads emit metrics scraped by Prometheus and logs collected by Grafana Alloy, which ships them to Loki. Grafana queries both Prometheus and Loki for dashboards. Prometheus evaluates alert rules and routes firing alerts to Alertmanager.">
+          <figcaption class="font-mono text-[13px] tracking-widest uppercase text-slate-500 mb-5">
+            Observability · metrics and logs, one pane of glass
+          </figcaption>
+
+          <div class="rounded-2xl border border-slate-800 bg-surface-900 p-5 sm:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+              <!-- Source -->
+              <div class="flex flex-col justify-center">
+                <div class="diag-node rounded-xl border border-slate-700 bg-surface-800 p-4 text-center">
+                  <p class="font-mono text-sm text-slate-100">Cluster workloads</p>
+                  <p class="mt-1 text-xs text-slate-500">metrics · logs</p>
+                </div>
+              </div>
+
+              <!-- Pipelines -->
+              <div class="flex flex-col justify-center gap-4">
+                <div class="diag-node rounded-xl border border-slate-700 bg-surface-800 p-4">
+                  <p class="font-mono text-sm text-slate-100">Prometheus</p>
+                  <p class="mt-1 text-xs text-slate-500">scrapes metrics · evaluates alert rules</p>
+                </div>
+                <div class="diag-node rounded-xl border border-slate-700 bg-surface-800 p-4">
+                  <p class="font-mono text-sm text-slate-100">Grafana Alloy → Loki</p>
+                  <p class="mt-1 text-xs text-slate-500">log collection &amp; aggregation (Alloy replaced EOL Promtail)</p>
+                </div>
+              </div>
+
+              <!-- Sinks -->
+              <div class="flex flex-col justify-center gap-4">
+                <div class="diag-node rounded-xl border border-emerald-500/50 bg-emerald-500/5 p-4">
+                  <p class="font-mono text-sm text-emerald-300">Grafana</p>
+                  <p class="mt-1 text-xs text-emerald-200/60">dashboards over both stores</p>
+                </div>
+                <div class="diag-node rounded-xl border border-slate-700 bg-surface-800 p-4">
+                  <p class="font-mono text-sm text-slate-100">Alertmanager</p>
+                  <p class="mt-1 text-xs text-slate-500">routes firing alerts</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 3 · BY THE NUMBERS -->
+    <!-- ============================================================ -->
+    <section aria-labelledby="numbers-heading" class="border-b border-slate-800/70">
+      <div class="max-w-content mx-auto px-5 sm:px-8 py-14 sm:py-16">
+        <h2 id="numbers-heading" class="sr-only">Key metrics</h2>
+        <dl class="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 reveal">
+          <div class="flex flex-col text-center">
+            <dt class="order-2 mt-2 text-xs sm:text-sm text-slate-500">pods per t3.medium, up from ~17<br class="hidden sm:block" />(VPC CNI prefix delegation)</dt>
+            <dd class="order-1 font-mono text-3xl sm:text-4xl font-semibold text-slate-100">~110</dd>
+          </div>
+          <div class="flex flex-col text-center">
+            <dt class="order-2 mt-2 text-xs sm:text-sm text-slate-500">monthly lab cost vs ~€100 running 24/7<br class="hidden sm:block" />(ephemeral destroy/apply pattern)</dt>
+            <dd class="order-1 font-mono text-3xl sm:text-4xl font-semibold text-slate-100">€20–30</dd>
+          </div>
+          <div class="flex flex-col text-center">
+            <dt class="order-2 mt-2 text-xs sm:text-sm text-slate-500">retrieval Precision@1<br class="hidden sm:block" />(munich-rag-compliance, evaluated)</dt>
+            <dd class="order-1 font-mono text-3xl sm:text-4xl font-semibold text-emerald-300">80%</dd>
+          </div>
+          <div class="flex flex-col text-center">
+            <dt class="order-2 mt-2 text-xs sm:text-sm text-slate-500">architecture decision records · lessons learned<br class="hidden sm:block" />(written, not implied)</dt>
+            <dd class="order-1 font-mono text-3xl sm:text-4xl font-semibold text-slate-100">7 · 30+</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 4 · MUNICH-RAG-COMPLIANCE TEASER -->
+    <!-- ============================================================ -->
+    <section aria-labelledby="rag-heading">
+      <div class="max-w-content mx-auto px-5 sm:px-8 py-16 sm:py-24">
+        <div class="rounded-2xl border border-slate-800 bg-surface-900 overflow-hidden reveal">
+          <div class="p-6 sm:p-10">
+
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+              <p class="font-mono text-[13px] tracking-widest uppercase text-emerald-400/90">The application peak · next tenant workload</p>
+              <span class="rounded bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 font-mono text-[11px] uppercase tracking-wide text-amber-300">dev-deployed · prod-designed</span>
+            </div>
+
+            <h2 id="rag-heading" class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-100">
+              munich-rag-compliance
+            </h2>
+
+            <p class="mt-4 max-w-3xl text-base leading-relaxed">
+              Compliance-aware Retrieval-Augmented Generation over German regulatory corpora
+              (DSGVO/BDSG), built citation-grounded for the regulated Munich finance and insurance
+              market. It runs today in a dev/local context; its production home is the EKS platform
+              above — that integration is the roadmap, and the reason the platform exists.
+            </p>
+
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 class="font-mono text-xs uppercase tracking-widest text-slate-500 mb-4">Architecture</h3>
+                <ul class="space-y-3 text-sm text-slate-400">
+                  <li class="flex gap-3">
+                    <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" aria-hidden="true"></span>
+                    <span><span class="text-slate-200">LangGraph agent orchestration</span> — query classifier, conditional routing, parallel multi-article retrieval, citation validator</span>
+                  </li>
+                  <li class="flex gap-3">
+                    <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" aria-hidden="true"></span>
+                    <span><span class="text-slate-200">Hybrid retrieval</span> — dense multilingual-e5 + sparse, fused, with cross-encoder reranking</span>
+                  </li>
+                  <li class="flex gap-3">
+                    <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" aria-hidden="true"></span>
+                    <span><span class="text-slate-200">EU-sovereign stack</span> — Qdrant vector store, Mistral models</span>
+                  </li>
+                  <li class="flex gap-3">
+                    <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" aria-hidden="true"></span>
+                    <span><span class="text-slate-200">Citation-grounded answers</span> — every response traceable to the regulatory article it cites</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 class="font-mono text-xs uppercase tracking-widest text-slate-500 mb-4">Measured retrieval quality</h3>
+                <div class="grid grid-cols-3 gap-3">
+                  <div class="rounded-lg border border-slate-800 bg-surface-850 p-4 text-center">
+                    <p class="font-mono text-2xl font-semibold text-slate-100">80%</p>
+                    <p class="mt-1 font-mono text-[11px] uppercase tracking-wide text-slate-500">P@1</p>
+                  </div>
+                  <div class="rounded-lg border border-slate-800 bg-surface-850 p-4 text-center">
+                    <p class="font-mono text-2xl font-semibold text-slate-100">88%</p>
+                    <p class="mt-1 font-mono text-[11px] uppercase tracking-wide text-slate-500">R@5</p>
+                  </div>
+                  <div class="rounded-lg border border-slate-800 bg-surface-850 p-4 text-center">
+                    <p class="font-mono text-2xl font-semibold text-slate-100">0.828</p>
+                    <p class="mt-1 font-mono text-[11px] uppercase tracking-wide text-slate-500">MRR</p>
+                  </div>
+                </div>
+                <p class="mt-4 text-xs text-slate-500 leading-relaxed">
+                  Evaluated on the German regulatory corpus in the dev environment. Not yet running on
+                  the EKS platform — KServe/vLLM serving on GPU node pools is the planned integration path.
+                </p>
+                <a href="https://github.com/srinivas-singireddy/munich-rag-compliance" target="_blank" rel="noopener noreferrer"
+                   class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 hover:text-emerald-200 transition-colors">
+                  View the repository
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13L13 3M6 3h7v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER -->
+  <!-- ============================================================ -->
+  <footer class="border-t border-slate-800/70">
+    <div class="max-w-content mx-auto px-5 sm:px-8 py-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div>
+        <p class="text-sm font-semibold text-slate-200">Srinivas Reddy Singireddy</p>
+        <p class="mt-1 text-xs text-slate-500 font-mono">Cloud &amp; DevOps Solutions Architect · Munich · <span id="year"></span></p>
+      </div>
+      <nav aria-label="Footer" class="flex flex-wrap items-center gap-5">
+        <a href="https://www.linkedin.com/in/srinivas-singireddy/" target="_blank" rel="noopener noreferrer"
+           class="text-sm font-medium text-slate-400 hover:text-emerald-300 transition-colors">LinkedIn</a>
+        <a href="https://github.com/srinivas-singireddy" target="_blank" rel="noopener noreferrer"
+           class="text-sm font-medium text-slate-400 hover:text-emerald-300 transition-colors">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll reveal — respects prefers-reduced-motion via CSS override
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+
+</body>
+</html>
